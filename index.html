@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Шифрование и дешифрование</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Шифрование и дешифрока слов</h1>
+        <div class="form-action">
+        <div class="text-content">
+        <textarea maxlength="150" name="content-text" id="fromtext" class="fromtext"></textarea>
+        </div>
+        <div class="viborshifra">
+            <label for="method-shifra" class="shifr-name">Выберите шифр</label>
+            <select name="shifr-select" id="method-shifra">
+                <option class="no-deshif" value="Shifr_md5">Шифр md5</option>
+                <option class="select_language" value="atbash">шифр Атбащ</option>
+                <option value="chezar">Шифр Цезаря</option>
+                <option value="bekon">Шифр Бэкона</option>
+                <option value="vizhener">Шифр Виженера</option>
+                <!-- <option class="no-deshif" value="Shifr_md5">Шифр md5</option>
+                <option class="no-deshif" value="8">Шифр md5</option> -->
+            </select>
+        </div>
+        <div class="select-acction">
+            <label for="acction" class="acction">Выберите действие</label>
+            <select name="acction" id="acction">
+                <option id="deshif" value="deshifrovanie">дешифровка</option>
+                <option value="shifrovka">шифровка</option>
+            </select>
+            
+        </div>
+        <div class="language" id="language-container">
+            
+        </div>
+        <button id="zashifrovat">Отправить данные</button>
+        <span class="result"></span>
+    </div>
+</div>
+<script>
+    
+</script>
+<script src="./Script.js"></script>
+</body>
+</html>

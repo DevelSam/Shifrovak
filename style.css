@@ -1,0 +1,37 @@
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form-action{
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+.viborshifra{
+    margin-bottom: 20px;
+}
+#method-shifra{
+    font-size: 16px;
+}
+#acction{
+    font-size: 16px;
+}
+.shifr-name{
+    margin-right: 30px;
+    font-size: 20px;
+}
+.fromtext{
+    max-width: 450px;
+    width: 450px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+.acction{
+    margin-right: 30px;
+    font-size: 20px;
+}
+.select-acction{
+    margin-bottom: 20px;
+}
