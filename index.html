@@ -18,7 +18,7 @@
             <select name="shifr-select" id="method-shifra">
                 <option class="no-deshif" value="Shifr_md5">Шифр md5</option>
                 <option class="select_language" value="atbash">шифр Атбащ</option>
-                <option value="chezar">Шифр Цезаря</option>
+                <option class="select_language select_sdvig" value="chezar">Шифр Цезаря</option>
                 <option value="bekon">Шифр Бэкона</option>
                 <option value="vizhener">Шифр Виженера</option>
                 <!-- <option class="no-deshif" value="Shifr_md5">Шифр md5</option>
@@ -36,7 +36,12 @@
         <div class="language" id="language-container">
             
         </div>
-        <button id="zashifrovat">Отправить данные</button>
+        <div class="sdvig" id="sdvig-container">
+            <!-- <label for="sdvig_number" class="sdvig-text">Выберите шаг</label>
+            <input id="sdvig_number" class="sdvig-input" type="number" max="10" min="2"> -->
+        </div>
+        <button id="zashifrovat" class="button">Отправить данные</button>
+        <br>
         <span class="result"></span>
     </div>
 </div>

@@ -2,17 +2,20 @@ const methodShifra = document.getElementById('method-shifra');
 const acction = document.getElementById('deshif');
 const acction_select = document.getElementById('acction')
 let language
+let sdvig
+const sdvig_container = document.getElementById('sdvig-container')
 const languageContainer = document.getElementById('language-container');
-methodShifra.addEventListener('change', function(){
+methodShifra.addEventListener('change', function () {
     languageContainer.innerHTML = "";
-    if(methodShifra.options[methodShifra.selectedIndex].classList.contains('no-deshif')){
+    sdvig_container.innerHTML = ""
+    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('no-deshif')) {
         acction.disabled = true;
     }
-    else{
+    else {
         acction.disabled = false;
     }
-    if(methodShifra.options[methodShifra.selectedIndex].classList.contains('select_language')){
-        
+    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_language')) {
+
         // Создание label
         const label = document.createElement('label');
         label.setAttribute('for', 'language');
@@ -40,7 +43,20 @@ methodShifra.addEventListener('change', function(){
         languageContainer.appendChild(label);
         languageContainer.appendChild(select);
     }
-    
+    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_sdvig')){
+        const label  = document.createElement('label')
+        label.setAttribute('for', 'sdvig_number')
+        label.textContent = 'Выберите шаг'
+
+        const input = document.createElement('input')
+        input.setAttribute('id', 'sdvig_number')
+        input.setAttribute('class', 'sdvig-input')
+        input.setAttribute('type', 'number')
+        input.setAttribute('min', '2')
+        input.setAttribute('max', '10')
+        sdvig_container.append(label)
+        sdvig_container.append(input)
+    }
 });
 
 document.getElementById('zashifrovat').addEventListener('click', reshit);
@@ -49,8 +65,11 @@ function reshit() {
     const shifr = document.getElementById('method-shifra').value
     const acction = document.getElementById('acction').value
     let result = document.getElementsByClassName('result')[0];
-    if(methodShifra.options[methodShifra.selectedIndex].classList.contains('select_language')){
-    language = document.getElementById('language').value
+    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_language')) {
+        language = document.getElementById('language').value
+    }
+    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_sdvig')){
+        sdvig = document.getElementById('sdvig_number').value
     }
     if (text === '') {
         result.innerText = 'Заполните поле с текстом!'
@@ -61,7 +80,7 @@ function reshit() {
             return result.innerText = atbash_shifr(text, acction, language);
             break;
         case 'chezar':
-            return result.innerText = chezar_shifr(text, acction);
+            return result.innerText = chezar_shifr(text, acction, language, sdvig);
             break;
         case 'bekon':
             return result.innerText = bekon_shifr(text, acction);
@@ -71,48 +90,49 @@ function reshit() {
             break;
         case 'Shifr_md5':
             return result.innerText = Shifr_md5(text);
-            default:
-                return result.innerText = 'Выберите шифр!';
+        default:
+            return result.innerText = 'Выберите шифр!';
     }
     document.getElementById('fromtext').value = '';
     reshit.innerText = ''
 }
 function atbash_shifr(text, acction, language) {
     let alfavit, reversealfavit;
-    if(language === 'english'){
+    
+    if (language === 'english') {
         alfavit = 'abcdefghijklmnopqrstuvwxyz'
         reversealfavit = 'zyxwvutsrqponmlkjihgfedcba'
     }
-    if(language === 'russian'){
-        alfavit ='абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+    if (language === 'russian') {
+        alfavit = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
         reversealfavit = 'яюэьыъщшчцхфутсрпонмлкйизжёедгвба';
     }
     if (acction === 'shifrovka') {
-            let result_text = ''
-            for (let i = 0; i < text.length; i++) {
-                if (text[i] === text[i].toUpperCase()) {
-                    let char = text[i].toLowerCase()
-                    let indextext = alfavit.indexOf(char)
-                    if (indextext !== -1) {
-                        result_text += reversealfavit[indextext].toUpperCase()
-                    }
-                    else {
-                        result_text += char
-                    }
+        let result_text = ''
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === text[i].toUpperCase()) {
+                let char = text[i].toLowerCase()
+                let indextext = alfavit.indexOf(char)
+                if (indextext !== -1) {
+                    result_text += reversealfavit[indextext].toUpperCase()
                 }
                 else {
-                    let char = text[i].toLowerCase()
-                    let indextext = alfavit.indexOf(char)
-                    if (indextext !== -1) {
-                        result_text += reversealfavit[indextext]
-                    }
-                    else {
-                        result_text += char
-                    }
+                    result_text += char
                 }
             }
-            return result_text
+            else {
+                let char = text[i].toLowerCase()
+                let indextext = alfavit.indexOf(char)
+                if (indextext !== -1) {
+                    result_text += reversealfavit[indextext]
+                }
+                else {
+                    result_text += char
+                }
+            }
         }
+        return result_text
+    }
     else {
 
         let result_text = ''
@@ -141,15 +161,82 @@ function atbash_shifr(text, acction, language) {
         return result_text
     }
 }
-function chezar_shifr(){
+function chezar_shifr(text, acction, language, sdvig) {
+    let alfavit;
+    let result = ""
+    console.log(typeof(sdvig))
+    
+    if (language === 'english') {
+        alfavit = 'abcdefghijklmnopqrstuvwxyz'
+    }
+    if (language === 'russian') {
+        alfavit = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+    }
+    const shift = sdvig % alfavit.length;
+    if (acction === 'shifrovka') {
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === text[i].toUpperCase()) {
+                let char = text[i].toLowerCase()
+                let indextext = alfavit.indexOf(char)
+                let shifrindex = (indextext + shift) % alfavit.length
+                if (indextext !== -1) {
+                    result += alfavit[shifrindex].toUpperCase()
+                }
+                else {
+                    result += char
+                }
+            }
+            else {
+                let char = text[i].toLowerCase()
+                let indextext = alfavit.indexOf(char)
+                let shifrindex = (indextext + shift) % alfavit.length
+                if (indextext !== -1) {
+                    result += alfavit[shifrindex]
+                }
+                else {
+                    result += char
+                }
+            }
+        }
+        return result
+    }
+    else {
+        for (let i = 0; i < text.length; i++) {
+            if (text[i] === text[i].toUpperCase()) {
+                let char = text[i].toLowerCase()
+                let indextext = alfavit.indexOf(char)
+                let shifrindex = (indextext - shift + alfavit.length) % alfavit.length
+                if (indextext !== -1) {
+                    result += alfavit[shifrindex].toUpperCase()
+                }
+                else {
+                    result += char
+                }
+            }
+            else {
+
+                let char = text[i].toLowerCase()
+                let indextext = alfavit.indexOf(char)
+                let shifrindex = (indextext - shift + alfavit.length) % alfavit.length
+            
+                if (indextext !== -1) {
+                    result += alfavit[shifrindex]
+                }
+                else {
+                    result += char
+                }
+            }
+        }
+        return result
+    }
+}
+
+function bekon_shifr() {
     return 'в разработке'
 }
-function bekon_shifr(){
+function vizhener_shifr() {
     return 'в разработке'
 }
-function  vizhener_shifr(){
-    return 'в разработке'
-}
-function  Shifr_md5(){
+function Shifr_md5() {
     return 'в разработке'
 }
