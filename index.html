@@ -19,8 +19,8 @@
                 <option class="no-deshif" value="Shifr_md5">Шифр md5</option>
                 <option class="select_language" value="atbash">шифр Атбащ</option>
                 <option class="select_language select_sdvig" value="chezar">Шифр Цезаря</option>
-                <option value="bekon">Шифр Бэкона</option>
-                <option value="vizhener">Шифр Виженера</option>
+                <option class="select_language" value="bekon">Шифр Бэкона</option>
+                <option class="select_language select_key" value="vizhener">Шифр Виженера</option>
                 <!-- <option class="no-deshif" value="Shifr_md5">Шифр md5</option>
                 <option class="no-deshif" value="8">Шифр md5</option> -->
             </select>
@@ -28,8 +28,8 @@
         <div class="select-acction">
             <label for="acction" class="acction">Выберите действие</label>
             <select name="acction" id="acction">
-                <option id="deshif" value="deshifrovanie">дешифровка</option>
                 <option value="shifrovka">шифровка</option>
+                <option id="deshif" value="deshifrovanie" disabled="true">дешифровка</option>
             </select>
             
         </div>
@@ -40,14 +40,16 @@
             <!-- <label for="sdvig_number" class="sdvig-text">Выберите шаг</label>
             <input id="sdvig_number" class="sdvig-input" type="number" max="10" min="2"> -->
         </div>
+        <div class="key" id="key_container">
+            <!-- <label for="key_str" class="key-text">Напишите ключ</label>
+            <input type="text" id="key_str" class="key-input" maxlength="20"> -->
+        </div>
         <button id="zashifrovat" class="button">Отправить данные</button>
         <br>
         <span class="result"></span>
     </div>
 </div>
-<script>
-    
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 <script src="./Script.js"></script>
 </body>
 </html>

@@ -48,3 +48,9 @@
 .result{
     font-size: 18px;
 }
+.key{
+    margin: 20px;
+}
+.key-text{
+    margin-right: 15px;
+}
