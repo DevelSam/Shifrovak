@@ -54,3 +54,10 @@
 .key-text{
     margin-right: 15px;
 }
+.result{
+    overflow-wrap: break-word;
+}
+.result_block{
+    display: block;
+    max-width: 600px;
+}

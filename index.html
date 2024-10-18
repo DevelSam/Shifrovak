@@ -16,7 +16,12 @@
         <div class="viborshifra">
             <label for="method-shifra" class="shifr-name">Выберите шифр</label>
             <select name="shifr-select" id="method-shifra">
-                <option class="no-deshif" value="Shifr_md5">Шифр md5</option>
+                <option class="no-deshif" value="Shifr_md5">md5</option>
+                <option class="select_key" value="Shifr_AES">AES-256</option>
+                <option class="select_key" value="Shifr_DES">DES</option>
+                <option class="no-deshif" value="Shifr_sha-1">sha-1</option>
+                <option class="no-deshif" value="Shifr_sha-256">sha-256</option>
+                <option class="no-deshif" value="Shifr_sha-512">sha-512</option>
                 <option class="select_language" value="atbash">шифр Атбащ</option>
                 <option class="select_language select_sdvig" value="chezar">Шифр Цезаря</option>
                 <option class="select_language" value="bekon">Шифр Бэкона</option>
@@ -46,7 +51,7 @@
         </div>
         <button id="zashifrovat" class="button">Отправить данные</button>
         <br>
-        <span class="result"></span>
+        <span class="result_block" ><p class="result"></p></span>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>

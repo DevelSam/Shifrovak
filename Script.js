@@ -1,3 +1,4 @@
+// const CryptoJS = require("crypto-js");
 
 const methodShifra = document.getElementById('method-shifra');
 const acction = document.getElementById('deshif');
@@ -61,7 +62,7 @@ methodShifra.addEventListener('change', function () {
         sdvig_container.append(label)
         sdvig_container.append(input)
     }
-    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_key')){
+    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_key')) {
         const label = document.createElement('label')
         label.setAttribute('for', 'key_str')
         label.setAttribute('class', 'key-text')
@@ -89,14 +90,14 @@ function reshit() {
     if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_sdvig')) {
         sdvig = document.getElementById('sdvig_number').value
     }
-    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_key')){
+    if (methodShifra.options[methodShifra.selectedIndex].classList.contains('select_key')) {
         key = document.getElementById('key_str').value
     }
     if (text === '') {
         result.innerText = 'Заполните поле с текстом!'
         return result
     }
-    
+
     switch (shifr) {
         case 'atbash':
             return result.innerText = atbash_shifr(text, acction, language);
@@ -112,6 +113,21 @@ function reshit() {
             break;
         case 'Shifr_md5':
             return result.innerText = Shifr_md5(text);
+            break;
+        case 'Shifr_sha-1':
+            return result.innerText = Shifr_sha_1(text);
+            break;
+        case 'Shifr_sha-256':
+            return result.innerText = Shifr_sha_256(text);
+            break;
+        case 'Shifr_sha-512':
+            return result.innerText = Shifr_sha_512(text);
+            break;
+        case 'Shifr_AES':
+            return result.innerText = Shifr_AES(text, acction, key);
+            break;
+        case 'Shifr_DES':
+            return result.innerText = Shifr_DES(text, acction, key);
             break;
         default:
             return result.innerText = 'Выберите шифр!';
@@ -313,54 +329,88 @@ function bekon_shifr(text, acction, language) {
     return result
 }
 function vizhener_shifr(text, acction, language, key) {
-    let alfavit, result,charindex,keyCharIndex;
+    let alfavit, result, charindex, keyCharIndex;
     result = ""
     alfavit = ""
     console.log(key)
-    if(language === 'russian'){
+    if (language === 'russian') {
         alfavit = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя';
     }
-    else if (language === 'english'){
+    else if (language === 'english') {
         alfavit = 'abcdefghijklmnopqrstuvwxyz';
     }
     else {
         result += "Неверный язык. Используйте 'Русский' или 'Английский'."
         return result
-        
-    } 
 
-        keylower = key.toLowerCase()
-        textlower = text.toLowerCase()
-        let keyIndex = 0;
-        for(let i = 0 ; i < text.length; i++){
+    }
 
-            const char = textlower[i]
+    keylower = key.toLowerCase()
+    textlower = text.toLowerCase()
+    let keyIndex = 0;
+    for (let i = 0; i < text.length; i++) {
 
-            if(alfavit.includes(char)){
-                charindex = alfavit.indexOf(char)
-                keyCharIndex = alfavit.indexOf(keylower[keyIndex % keylower.length])
-            
-        if(acction === 'shifrovka'){
-            const shifIndex =  ( charindex + keyCharIndex) % alfavit.length;
-            console.log(alfavit)
-            result +=  text[i] === text[i].toUpperCase() ? alfavit[shifIndex].toUpperCase() : alfavit[shifIndex]
-        }
-        else if(acction === 'deshifrovanie'){
-            const decryptedIndex = (charindex - keyCharIndex + alfavit.length) % alfavit.length;
+        const char = textlower[i]
+
+        if (alfavit.includes(char)) {
+            charindex = alfavit.indexOf(char)
+            keyCharIndex = alfavit.indexOf(keylower[keyIndex % keylower.length])
+
+            if (acction === 'shifrovka') {
+                const shifIndex = (charindex + keyCharIndex) % alfavit.length;
+                console.log(alfavit)
+                result += text[i] === text[i].toUpperCase() ? alfavit[shifIndex].toUpperCase() : alfavit[shifIndex]
+            }
+            else if (acction === 'deshifrovanie') {
+                const decryptedIndex = (charindex - keyCharIndex + alfavit.length) % alfavit.length;
                 result += text[i] === text[i].toUpperCase() ? alfavit[decryptedIndex].toUpperCase() : alfavit[decryptedIndex]
+            }
+            keyIndex++
         }
-        keyIndex++
-        }
-        else{
+        else {
             result += char
         }
     }
     return result
 }
 function Shifr_md5(text, acction) {
-    if(acction ==='deshifrovanie'){
+    if (acction === 'deshifrovanie') {
         return 'Дешифрование не работает на хэш!'
     }
-    var hash = CryptoJS.MD5(text);
+    const hash = CryptoJS.MD5(text);
     return hash
+}
+function Shifr_sha_1(text) {
+    const hash = CryptoJS.SHA1(text)
+    return hash
+}
+function Shifr_sha_256(text) {
+    const hash = CryptoJS.SHA256(text)
+    return hash
+}
+function Shifr_sha_512(text) {
+    const hash = CryptoJS.SHA512(text)
+    return hash
+}
+function Shifr_AES(text, acction, key){
+    let hash;
+    if(acction === 'shifrovka'){
+    hash = CryptoJS.AES.encrypt(text, key)
+    return hash
+    }
+    else{
+        hash = CryptoJS.AES.decrypt(text, key)
+        return hash
+    }
+}
+function Shifr_DES(text, acction, key){
+    let hash = ""
+    if(acction === 'shifrovka'){
+    hash = CryptoJS.DES.encrypt(text, key)
+    return hash
+    }
+    else{
+        hash = CryptoJS.DES.decrypt(text, key)
+        return hash
+    }
 }
